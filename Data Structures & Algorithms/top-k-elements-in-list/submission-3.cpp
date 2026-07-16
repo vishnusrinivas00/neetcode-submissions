@@ -1,15 +1,20 @@
 class Solution {
 public:
-    vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        unordered_map<string , vector<string>>freq;
-        for(string s:strs){
-            string word = s;
-            sort(word.begin(),word.end());
-            freq[word].push_back(s);
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int,int>freq;
+
+        for(int num:nums){
+            freq[num]++;
         }
-        vector<vector<string>> result;
+        priority_queue<pair<int,int>> pq;
+
         for(auto &rem:freq){
-            result.push_back(rem.second);
+            pq.push({rem.second,rem.first});
+        }
+        vector<int>result;
+        for(int i=0;i<k;i++){
+            result.push_back(pq.top().second);
+            pq.pop();
         }
         return result;
     }
